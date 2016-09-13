@@ -73,6 +73,7 @@ def step3():
 		username=sesion.get("user")
         password=sesion.get("pass")
         idproyecto=sesion.get("idproyecto")
+
         if opcion=="grupo":
         	r=requests.get('https://dit.gonzalonazareno.org/redmine/groups/'+grupo+'.json?include=users',auth=(username,password),verify=False)
         	if r.status_code == 200:

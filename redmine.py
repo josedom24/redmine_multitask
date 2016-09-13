@@ -70,6 +70,10 @@ def step3():
 		opcion=request.forms.get("opcion")
 		grupo=request.forms.get("grupo")
 		alumnos=request.forms.getall("alumnos")
+		username=sesion.get("user")
+                password=sesion.get("pass")
+                idproyecto=sesion.get("idproyecto")
+
 		return alumnos
 
 @route('/logout')

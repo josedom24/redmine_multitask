@@ -71,9 +71,15 @@ def step3():
 		grupo=request.forms.get("grupo")
 		alumnos=request.forms.getall("alumnos")
 		username=sesion.get("user")
-                password=sesion.get("pass")
-                idproyecto=sesion.get("idproyecto")
-
+        password=sesion.get("pass")
+        idproyecto=sesion.get("idproyecto")
+        if opcion=="grupo":
+        	r=requests.get('https://dit.gonzalonazareno.org/redmine/groups/'+grupo+'.json?include=users',auth=(username,password),verify=False)
+        	if r.status_code == 200:
+				doc=r.json()
+				alumnos=[]
+				for user in doc["group"]["users"]:
+					alumnos.append(str(user["id"]))
 		return alumnos
 
 @route('/logout')

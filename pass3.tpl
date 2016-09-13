@@ -26,7 +26,7 @@
           <label for="Proyecto">Alumnos:</label>
           % for p in usuarios:
             % if p["roles"][0]["id"]==9:
-              <input type="checkbox" name="alumnos[]" value="{{p["user"]["id"]}}"> {{p["user"]["name"]}}<br>
+              <input type="checkbox" name="alumnos" value="{{p["user"]["id"]}}"> {{p["user"]["name"]}}<br>
             % end
           % end
       <button type="submit">Siguiente</button>

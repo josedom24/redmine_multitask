@@ -69,7 +69,7 @@ def step3():
 	else:
 		opcion=request.forms.get("opcion")
 		grupo=request.forms.get("grupo")
-		alumnos=request.forms.get("alumnos")
+		alumnos=request.forms.getall("alumnos")
 		return alumnos
 
 @route('/logout')

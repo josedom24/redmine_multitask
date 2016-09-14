@@ -15,7 +15,7 @@
         <h3>Usuario:{{user}}</h3><p><a href="logout">Salir</a></p>
         
     <fieldset>
-          <legend><span class="number">4</span>Proyecto:{{nombreproyecto}}</legend>
+          <legend><span class="number">4</span>Nueva Tarea - Proyecto:{{nombreproyecto}}</legend>
   <label for="Tittle">Título:</label>
           <input type="text" id="title" name="title">
           <label for="bio">Descripción:</label>
@@ -27,11 +27,9 @@
             <option value="{{p["id"]}}">{{p["name"]}}</option>
           % end
         </select>
-         
-         <label for="date">Fecha de inicio:</label>
-          <input type="text" name="fecha1" value="dd/mm/aaaa">
+                 
           <label for="date">Fecha fin:</label>
-          <input type="text" name="fecha2">
+          <input type="text" name="fecha2" value="dd/mm/aaaa">
         </fieldset>
           <button type="submit">Crear tareas</button>
       </form>

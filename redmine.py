@@ -112,3 +112,22 @@ def server_static(filepath):
     return static_file(filepath, root='static')
 
 run(app=app,host='localhost', port=8080,reloader=True)
+
+import json
+import requests
+payload = {
+        'issue': {
+            'project_id': 24,
+            'subject': 'Prueba api',
+            'description': 'Prueba redmine api',
+            'category_id': 3,
+            'assigned_to_id': 85,
+            'due_date':'2016-09-29'
+
+        }
+    }
+
+parameters_json = json.dumps(payload)
+headers = {'Content-Type': 'application/json'}
+r = requests.post('https://dit.gonzalonazareno.org/redmine/issues.json', auth=(username,password), data=parameters_json, headers=headers,verify=False)
+print r.status

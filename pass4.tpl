@@ -1,24 +1,40 @@
-<label for="Tittle">Title:</label>
-          <input type="text" id="title" name="title">
-          <label for="bio">Description:</label>
-          <textarea id="bio" name="user_bio"></textarea>
-        </fieldset>
-        <fieldset>
-        <label for="job">Group:</label>
-        <select id="group" name="group">
-          
-            <option value="">Example</option>
-  
-          
-        </select>
-          <label for="category">Category:</label>
-        <select id="category" name="category">
-          
-            <option value="">Example</option>
-  
-          
-        </select>
+<!DOCTYPE html>
+<html>  
+  <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign Up Form</title>
         
-         <label for="date">Date:</label>
-          <input type="text" id="date" name="date">
+        <link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/static/main.css">
+    </head>
+    <body>
+
+      <form action="step4" method="post">
+        <h1>Redmine Multi Task</h1>
+        <h3>Usuario:{{user}}</h3><p><a href="logout">Salir</a></p>
+        
+    <fieldset>
+          <legend><span class="number">4</span>Proyecto:{{nombreproyecto}}</legend>
+  <label for="Tittle">Título:</label>
+          <input type="text" id="title" name="title">
+          <label for="bio">Descripción:</label>
+          <textarea id="bio" name="desc"></textarea>
+        
+        <label for="job">Categoría:</label>
+        <select id="categoria" name="categoria">
+         % for p in categorias:
+            <option value="{{p["id"]}}">{{p["name"]}}</option>
+          % end
+        </select>
+         
+         <label for="date">Fecha de inicio:</label>
+          <input type="text" name="fecha1" value="dd/mm/aaaa">
+          <label for="date">Fecha fin:</label>
+          <input type="text" name="fecha2">
         </fieldset>
+          <button type="submit">Crear tareas</button>
+      </form>
+      
+    </body>
+</html>

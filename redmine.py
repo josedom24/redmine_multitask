@@ -47,6 +47,7 @@ def step2():
 		if r.status_code == 200:
 			doc=r.json()
 			nombreproyecto=doc["project"]["name"]
+			sesion.set("nombreproyecto",nombreproyecto)
 		#Lista de grupos
 		r=requests.get('https://dit.gonzalonazareno.org/redmine/groups.json',auth=(username,password),verify=False)
 		if r.status_code == 200:
@@ -73,7 +74,8 @@ def step3():
 		username=sesion.get("user")
         password=sesion.get("pass")
         idproyecto=sesion.get("idproyecto")
-
+        nombreproyecto=sesion.get("nombreproyecto")
+        
         if opcion=="grupo":
         	r=requests.get('https://dit.gonzalonazareno.org/redmine/groups/'+grupo+'.json?include=users',auth=(username,password),verify=False)
         	if r.status_code == 200:
@@ -81,7 +83,23 @@ def step3():
 				alumnos=[]
 				for user in doc["group"]["users"]:
 					alumnos.append(str(user["id"]))
-		return alumnos
+
+		# Categorias
+		r=requests.get('https://dit.gonzalonazareno.org/redmine//projects/'+idproyecto+'/issue_categories.json',auth=(username,password),verify=False)
+		if r.status_code == 200:
+			doc=r.json()
+			categorias=doc["issue_categories"]
+				
+
+		return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,alumnos=alumnos,categorias=categorias)
+        
+
+
+@route('/step2',method="get")
+@route('/step3',method="get")
+@route('/step4',method="get")
+def error():
+	redirect("/login")
 
 @route('/logout')
 def do_logout():

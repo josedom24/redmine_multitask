@@ -81,7 +81,7 @@ def step3():
         	doc=r.json()
         	categorias=doc["issue_categories"]
         
-        print alumnos
+        
         if opcion=="grupo":
         	r=requests.get('https://dit.gonzalonazareno.org/redmine/groups/'+grupo+'.json?include=users',auth=(username,password),verify=False)
         	if r.status_code == 200:
@@ -89,7 +89,7 @@ def step3():
         		alumnos=[]
         		for user in doc["group"]["users"]:
         			alumnos.append(str(user["id"]))
-        print alumnos
+        
         return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,alumnos=alumnos,categorias=categorias)
         
 @route('/step4',method="post") 
@@ -101,7 +101,6 @@ def step4():
         password=sesion.get("pass")
         idproyecto=sesion.get("idproyecto")
         nombreproyecto=sesion.get("nombreproyecto")
-        print request.forms
         tittle=request.forms.get("tittle")
         desc=request.forms.get("desc")
         categoria=request.forms.get("categoria")

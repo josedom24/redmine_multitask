@@ -75,24 +75,37 @@ def step3():
         password=sesion.get("pass")
         idproyecto=sesion.get("idproyecto")
         nombreproyecto=sesion.get("nombreproyecto")
+        # Categorias
+        r=requests.get('https://dit.gonzalonazareno.org/redmine//projects/'+idproyecto+'/issue_categories.json',auth=(username,password),verify=False)
+        if r.status_code == 200:
+        	doc=r.json()
+        	categorias=doc["issue_categories"]
         
+        print alumnos
         if opcion=="grupo":
         	r=requests.get('https://dit.gonzalonazareno.org/redmine/groups/'+grupo+'.json?include=users',auth=(username,password),verify=False)
         	if r.status_code == 200:
-				doc=r.json()
-				alumnos=[]
-				for user in doc["group"]["users"]:
-					alumnos.append(str(user["id"]))
-
-		# Categorias
-		r=requests.get('https://dit.gonzalonazareno.org/redmine//projects/'+idproyecto+'/issue_categories.json',auth=(username,password),verify=False)
-		if r.status_code == 200:
-			doc=r.json()
-			categorias=doc["issue_categories"]
-				
-
-		return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,alumnos=alumnos,categorias=categorias)
+        		doc=r.json()
+        		alumnos=[]
+        		for user in doc["group"]["users"]:
+        			alumnos.append(str(user["id"]))
+        print alumnos
+        return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,alumnos=alumnos,categorias=categorias)
         
+@route('/step4',method="post") 
+def step4():
+	if not sesion.islogin():
+		redirect("/")
+	else:
+		username=sesion.get("user")
+        password=sesion.get("pass")
+        idproyecto=sesion.get("idproyecto")
+        nombreproyecto=sesion.get("nombreproyecto")
+        print request.forms
+        tittle=request.forms.get("tittle")
+        desc=request.forms.get("desc")
+        categoria=request.forms.get("categoria")
+        fecha2=request.forms.get("fecha2")
 
 
 @route('/step2',method="get")
@@ -113,21 +126,21 @@ def server_static(filepath):
 
 run(app=app,host='localhost', port=8080,reloader=True)
 
-import json
-import requests
-payload = {
-        'issue': {
-            'project_id': 24,
-            'subject': 'Prueba api',
-            'description': 'Prueba redmine api',
-            'category_id': 3,
-            'assigned_to_id': 85,
-            'due_date':'2016-09-29'
+#import json
+#import requests
+#payload = {
+#        'issue': {
+#            'project_id': 24,
+#            'subject': 'Prueba api',
+#            'description': 'Prueba redmine api',
+#            'category_id': 3,
+#            'assigned_to_id': 85,
+#            'due_date':'2016-09-29'#
 
-        }
-    }
+#        }
+#    }#
 
-parameters_json = json.dumps(payload)
-headers = {'Content-Type': 'application/json'}
-r = requests.post('https://dit.gonzalonazareno.org/redmine/issues.json', auth=(username,password), data=parameters_json, headers=headers,verify=False)
-print r.status
+#parameters_json = json.dumps(payload)
+#headers = {'Content-Type': 'application/json'}
+#r = requests.post('https://dit.gonzalonazareno.org/redmine/issues.json', auth=(username,password), data=parameters_json, headers=headers,verify=False)
+#print r.status

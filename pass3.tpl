@@ -27,7 +27,7 @@
           <input type="radio" name="opcion" value="alumno"> Seleccionar por alumnos<br>
           <label for="Proyecto">Alumnos:</label>
           % for p in usuarios:
-            % if p["roles"][0]["id"]==9:
+            % if p["roles"][0]["id"]==9 and p.has_key("user"):
               <input type="checkbox" name="alumnos" value="{{p["user"]["id"]}}"> {{p["user"]["name"]}}<br>
             % end
           % end

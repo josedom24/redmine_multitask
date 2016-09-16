@@ -92,7 +92,7 @@ def step3():
         		alumnos=[]
         		for user in doc["group"]["users"]:
         			alumnos.append(str(user["id"]))
-        
+        info={"tittle":"","desc":"","categoria":"-1","fecha2":"dd/mm/aaaa"}
         return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,alumnos=alumnos,categorias=categorias,error={},info={})
         
 @route('/step4',method="post") 

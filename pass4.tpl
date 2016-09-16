@@ -16,7 +16,7 @@
         
     <fieldset>
           <legend><span class="number">4</span>Nueva Tarea - Proyecto:{{nombreproyecto}}</legend>
-          <label for="Tittle">{{resultado}}</label>
+          <label for="Tittle">{{!resultado}}</label>
                  </fieldset>
          
           

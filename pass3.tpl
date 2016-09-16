@@ -21,9 +21,9 @@
 
           <label for="Tittle">Título:</label>
           
-          <input type="text" id="title" name="title">
+          <input type="text" id="title" name="tittle" required>
           <label for="bio">Descripción:</label>
-          <textarea id="bio" name="desc"></textarea>
+          <textarea id="bio" name="desc" required></textarea>
         
         <label for="job">Categoría:</label>
         <select id="categoria" name="categoria">
@@ -33,7 +33,7 @@
         </select>
                  
           <label for="date">Fecha fin:</label>
-          <input type="text" name="fecha2" value="dd/mm/aaaa">
+          <input type="text" name="fecha2" pattern="\d{1,2}/\d{1,2}/\d{4}">
 
           <input type="radio" name="opcion" value="grupo" checked> Seleccionar por grupo<br>
           <label for="Proyecto">Grupos:</label>

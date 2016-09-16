@@ -5,7 +5,7 @@ import requests
 import sesion
 #from lxml import etree
 from beaker.middleware import SessionMiddleware
-import funciones
+
 
 url_base="https://dit.gonzalonazareno.org/redmine/"
 
@@ -90,27 +90,41 @@ def step3():
         categoria=request.forms.get("categoria")
         fecha2=request.forms.get("fecha2")
         resultado=""
-        #resultados
-        if tittle=="":
-        	resultado=resultado+"Debes indicar el título de la tarea."+'<br/>'
-        if desc=="":
-        	resultado=resultado+"Debes indicar la descripción de la tarea."+'<br/>'
-        if fecha2=="dd/mm/aaaa":
-        	fecha2=""
-        else:
-        	if not validateDateEs(fecha2):
-        		resultado=resultado+"Debes indicar una fecha corecta."+'<br/>'
-        print resultado
-        if resultado<>"":
-        	return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,resultado=resultado)
+       
+        if fecha2<>"":
+        	lfecha=fecha2.split("/")
+	        fecha2=lfecha[2]+"-"+lfecha[1]+"-"+lfecha[0]
 
-#        if opcion=="grupo":
-#        	r=requests.get(url_base+'groups/'+grupo+'.json?include=users',auth=(username,password),verify=False)
-#        	if r.status_code == 200:
-#        		doc=r.json()
-#        		alumnos=[]
-#        		for user in doc["group"]["users"]:
-#        			alumnos.append(str(user["id"]))
+
+        if opcion=="grupo":
+        	r=requests.get(url_base+'groups/'+grupo+'.json?include=users',auth=(username,password),verify=False)
+        	if r.status_code == 200:
+        		doc=r.json()
+        		alumnos=[]
+        		for user in doc["group"]["users"]:
+        			alumnos.append(str(user["id"]))
+        
+
+        resultado=""
+        for alum in alumnos:
+        	payload = {'issue': {'project_id': idproyecto,'subject': tittle,'description': desc,'category_id': int(categoria),'assigned_to_id': int(alum),'due_date':fecha2}}
+        	print payload
+
+#       }
+#    }#
+
+#parameters_json = json.dumps(payload)
+#headers = {'Content-Type': 'application/json'}
+#r = requests.post(url_base+'issues.json', auth=(username,password), data=parameters_json, headers=headers,verify=False)
+#print r.status
+#        if len(alumnos)==0:
+#        	resultado=resultado+"Debes indicar algún alumno."+'<br/>'
+
+
+ #       if resultado<>"":
+#        	return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,resultado=resultado)
+#        else:
+
 
 
         #return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,categorias=categorias,error={},info=info)

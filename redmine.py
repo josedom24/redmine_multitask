@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from bottle import app,Bottle,route,run,request,template,static_file,redirect
 import requests
 import sesion

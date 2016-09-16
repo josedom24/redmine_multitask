@@ -16,14 +16,12 @@
         <h3>Usuario:{{user}}</h3><p><a href="logout">Salir</a></p>
         
     <fieldset>
-          <legend><span class="number">3</span>Proyecto:{{nombreproyecto}}</legend>
+          <legend><span class="number">3</span>Nueva Tarea -Proyecto:{{nombreproyecto}}</legend>
 
 
           <label for="Tittle">Título:</label>
-          % if error.has_key("tittle"):
-          <label for="Tittle">{{error["tittle"]}}</label>
-          % end
-          <input type="text" id="title" name="title" value="{{info["tittle"]}}">
+          
+          <input type="text" id="title" name="title">
           <label for="bio">Descripción:</label>
           <textarea id="bio" name="desc"></textarea>
         

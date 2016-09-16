@@ -89,40 +89,39 @@ def step3():
         desc=request.forms.get("desc")
         categoria=request.forms.get("categoria")
         fecha2=request.forms.get("fecha2")
-        
-        
-        
-        if opcion=="grupo":
-        	r=requests.get(url_base+'groups/'+grupo+'.json?include=users',auth=(username,password),verify=False)
-        	if r.status_code == 200:
-        		doc=r.json()
-        		alumnos=[]
-        		for user in doc["group"]["users"]:
-        			alumnos.append(str(user["id"]))
-        info={"tittle":"","desc":"","categoria":"-1","fecha2":"dd/mm/aaaa"}
-        return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,categorias=categorias,error={},info=info)
+        resultado=""
+        #resultados
+        if tittle=="":
+        	resultado=resultado+"Debes indicar el título de la tarea."+'<br/>'
+        if desc=="":
+        	resultado=resultado+"Debes indicar la descripción de la tarea."+'<br/>'
+        if fecha2=="dd/mm/aaaa":
+        	fecha2=""
+        else:
+        	if not validateDateEs(fecha2):
+        		resultado=resultado+"Debes indicar una fecha corecta."+'<br/>'
+        print resultado
+        if resultado<>"":
+        	return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,resultado=resultado)
+
+#        if opcion=="grupo":
+#        	r=requests.get(url_base+'groups/'+grupo+'.json?include=users',auth=(username,password),verify=False)
+#        	if r.status_code == 200:
+#        		doc=r.json()
+#        		alumnos=[]
+#        		for user in doc["group"]["users"]:
+#        			alumnos.append(str(user["id"]))
+
+
+        #return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,categorias=categorias,error={},info=info)
         
 @route('/step4',method="post") 
 def step4():
 	if not sesion.islogin():
 		redirect("/")
 	else:
-	
-        #Comprobamos errores
-        if info["tittle"]=="":
-        	error["tittle"]="Debes indicar el título de la tarea."
-        if info["desc"]=="":
-        	error["desc"]="Debes indicar la descripción de la tarea."
-        if info["fecha2"]=="dd/mm/aaaa":
-        	info["fecha2"]=""
-        else:
-        	if not validateDateEs(info["fecha2"]):
-        		error["fecha2"]="Debes indicar una fecha corecta"
-        		info["fecha2"]=""
-        	
-        if len(error)>0:
-        	return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,categorias=info["categorias"],error=error,info=info)        
-
+		pass
+       
 @route('/step2',method="get")
 @route('/step3',method="get")
 @route('/step4',method="get")

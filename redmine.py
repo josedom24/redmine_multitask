@@ -107,8 +107,16 @@ def step3():
 
         resultado=""
         for alum in alumnos:
+        	r=requests.get(url_base+'/users/'+alum+'.json,auth=(username,password),verify=False)
+        	if r.status_code==200:
+        		doc=r.json()
+        		nombre=doc["user"]["firstname"]+" "+doc["user"]["lastname"]
         	payload = {'issue': {'project_id': idproyecto,'subject': tittle,'description': desc,'category_id': int(categoria),'assigned_to_id': int(alum),'due_date':fecha2}}
-        	print payload
+        	parameters_json = json.dumps(payload)
+        	headers = {'Content-Type': 'application/json'}
+        	r = requests.post(url_base+'issues.json', auth=(username,password), data=parameters_json, headers=headers,verify=False)
+        	resultado=resultado+nombre+r.reason+"<br/>"
+        return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,resultado=resultado)
 
 #       }
 #    }#
@@ -122,7 +130,7 @@ def step3():
 
 
  #       if resultado<>"":
-#        	return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,resultado=resultado)
+#        	
 #        else:
 
 

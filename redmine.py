@@ -3,6 +3,7 @@ import requests
 import sesion
 #from lxml import etree
 from beaker.middleware import SessionMiddleware
+import funciones
 
 session_opts = {
     'session.type': 'memory',
@@ -90,7 +91,7 @@ def step3():
         		for user in doc["group"]["users"]:
         			alumnos.append(str(user["id"]))
         
-        return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,alumnos=alumnos,categorias=categorias)
+        return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,alumnos=alumnos,categorias=categorias,error={},info={})
         
 @route('/step4',method="post") 
 def step4():
@@ -105,7 +106,27 @@ def step4():
         desc=request.forms.get("desc")
         categoria=request.forms.get("categoria")
         fecha2=request.forms.get("fecha2")
-
+        error={}
+        info={}
+        #Comprobamos errores
+        if tittle=="":
+        	error["tittle"]="Debes indicar el título de la tarea."
+        else:
+        	info["tittle"]=tittle
+        if desc=="":
+        	error["desc"]="Debes indicar la descripción de la tarea."
+        else:
+        	info["desc"]=desc
+        if fecha2=="dd/mm/aaaa":
+        	fecha2=""
+        else:
+        	if not validateDateEs(fecha2):
+        		error["fecha2"]="Debes indicar una fecha corecta"
+        	else:
+        		info["fecha2"]=fecha2
+        info["categoria"]=categoria
+        if len(error)>0:
+        	return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,alumnos=alumnos,categorias=categorias,error=error,info=info)        
 
 @route('/step2',method="get")
 @route('/step3',method="get")

@@ -16,8 +16,11 @@
         
     <fieldset>
           <legend><span class="number">4</span>Nueva Tarea - Proyecto:{{nombreproyecto}}</legend>
-  <label for="Tittle">Título:</label>
-          <input type="text" id="title" name="title">
+          <label for="Tittle">Título:</label>
+          % if error.has_key("tittle"):
+          <label for="Tittle">{{error["tittle"]}}</label>
+          % end
+          <input type="text" id="title" name="title" value="{{info["tittle"]}}">
           <label for="bio">Descripción:</label>
           <textarea id="bio" name="desc"></textarea>
         

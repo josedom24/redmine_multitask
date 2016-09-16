@@ -100,33 +100,29 @@ def step4():
 	if not sesion.islogin():
 		redirect("/")
 	else:
+		info={}
 		username=sesion.get("user")
         password=sesion.get("pass")
         idproyecto=sesion.get("idproyecto")
         nombreproyecto=sesion.get("nombreproyecto")
-        tittle=request.forms.get("tittle")
-        desc=request.forms.get("desc")
-        categoria=request.forms.get("categoria")
-        fecha2=request.forms.get("fecha2")
+        info["title"]=request.forms.get("tittle")
+        info["desc"]=request.forms.get("desc")
+        info["categoria"]=request.forms.get("categoria")
+        info["fecha2"]=request.forms.get("fecha2")
         error={}
-        info={}
+        
         #Comprobamos errores
-        if tittle=="":
+        if info["tittle"]=="":
         	error["tittle"]="Debes indicar el título de la tarea."
-        else:
-        	info["tittle"]=tittle
-        if desc=="":
+        if info["desc"]=="":
         	error["desc"]="Debes indicar la descripción de la tarea."
+        if info["fecha2"]=="dd/mm/aaaa":
+        	info["fecha2"]=""
         else:
-        	info["desc"]=desc
-        if fecha2=="dd/mm/aaaa":
-        	fecha2=""
-        else:
-        	if not validateDateEs(fecha2):
+        	if not validateDateEs(info["fecha2"]):
         		error["fecha2"]="Debes indicar una fecha corecta"
-        	else:
-        		info["fecha2"]=fecha2
-        info["categoria"]=categoria
+        		info["fecha2"]=""
+        	
         if len(error)>0:
         	return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,alumnos=alumnos,categorias=categorias,error=error,info=info)        
 

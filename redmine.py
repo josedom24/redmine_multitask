@@ -63,10 +63,15 @@ def step2():
 		if r.status_code == 200:
 			doc=r.json()
 			usuarios=doc["memberships"]
+		#Lista Categorias
+
+        r=requests.get(url_base+'/projects/'+idproyecto+'/issue_categories.json',auth=(username,password),verify=False)
+        if r.status_code == 200:
+        	doc=r.json()
+        	categorias=doc["issue_categories"]
 
 
-
-		return template("pass3.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,grupos=grupos,usuarios=usuarios)
+		return template("pass3.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,grupos=grupos,usuarios=usuarios,categorias=categorias)
 
 @route('/step3',method="post") 
 def step3():
@@ -80,12 +85,11 @@ def step3():
         password=sesion.get("pass")
         idproyecto=sesion.get("idproyecto")
         nombreproyecto=sesion.get("nombreproyecto")
-        sesion.set("alumnos",alumnos)
-        # Categorias
-        r=requests.get(url_base+'/projects/'+idproyecto+'/issue_categories.json',auth=(username,password),verify=False)
-        if r.status_code == 200:
-        	doc=r.json()
-        	categorias=doc["issue_categories"]
+        tittle=request.forms.get("tittle")
+        desc=request.forms.get("desc")
+        categoria=request.forms.get("categoria")
+        fecha2=request.forms.get("fecha2")
+        
         
         
         if opcion=="grupo":
@@ -103,17 +107,7 @@ def step4():
 	if not sesion.islogin():
 		redirect("/")
 	else:
-		info={}
-		username=sesion.get("user")
-        password=sesion.get("pass")
-        idproyecto=sesion.get("idproyecto")
-        nombreproyecto=sesion.get("nombreproyecto")
-        info["tittle"]=request.forms.get("tittle")
-        info["desc"]=request.forms.get("desc")
-        info["categoria"]=request.forms.get("categoria")
-        info["fecha2"]=request.forms.get("fecha2")
-        error={}
-        
+	
         #Comprobamos errores
         if info["tittle"]=="":
         	error["tittle"]="Debes indicar el título de la tarea."
@@ -127,7 +121,7 @@ def step4():
         		info["fecha2"]=""
         	
         if len(error)>0:
-        	return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,categorias=categorias,error=error,info=info)        
+        	return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,categorias=info["categorias"],error=error,info=info)        
 
 @route('/step2',method="get")
 @route('/step3',method="get")

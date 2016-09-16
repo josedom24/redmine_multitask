@@ -5,7 +5,7 @@ import requests
 import sesion
 #from lxml import etree
 from beaker.middleware import SessionMiddleware
-
+import json
 
 url_base="https://dit.gonzalonazareno.org/redmine/"
 
@@ -107,7 +107,7 @@ def step3():
 
         resultado=""
         for alum in alumnos:
-        	r=requests.get(url_base+'/users/'+alum+'.json,auth=(username,password),verify=False)
+        	r=requests.get(url_base+'/users/'+alum+'.json',auth=(username,password),verify=False)
         	if r.status_code==200:
         		doc=r.json()
         		nombre=doc["user"]["firstname"]+" "+doc["user"]["lastname"]
@@ -115,38 +115,13 @@ def step3():
         	parameters_json = json.dumps(payload)
         	headers = {'Content-Type': 'application/json'}
         	r = requests.post(url_base+'issues.json', auth=(username,password), data=parameters_json, headers=headers,verify=False)
-        	resultado=resultado+nombre+r.reason+"<br/>"
+        	resultado=resultado+nombre+":"+r.reason+"<br/>"
         return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,resultado=resultado)
-
-#       }
-#    }#
-
-#parameters_json = json.dumps(payload)
-#headers = {'Content-Type': 'application/json'}
-#r = requests.post(url_base+'issues.json', auth=(username,password), data=parameters_json, headers=headers,verify=False)
-#print r.status
-#        if len(alumnos)==0:
-#        	resultado=resultado+"Debes indicar algún alumno."+'<br/>'
-
-
- #       if resultado<>"":
-#        	
-#        else:
-
-
-
-        #return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,categorias=categorias,error={},info=info)
-        
-@route('/step4',method="post") 
-def step4():
-	if not sesion.islogin():
-		redirect("/")
-	else:
-		pass
+ 
        
 @route('/step2',method="get")
 @route('/step3',method="get")
-@route('/step4',method="get")
+
 def error():
 	redirect("/login")
 
@@ -161,22 +136,3 @@ def server_static(filepath):
     return static_file(filepath, root='static')
 
 run(app=app,host='localhost', port=8080,reloader=True)
-
-#import json
-#import requests
-#payload = {
-#        'issue': {
-#            'project_id': 24,
-#            'subject': 'Prueba api',
-#            'description': 'Prueba redmine api',
-#            'category_id': 3,
-#            'assigned_to_id': 85,
-#            'due_date':'2016-09-29'#
-
-#        }
-#    }#
-
-#parameters_json = json.dumps(payload)
-#headers = {'Content-Type': 'application/json'}
-#r = requests.post(url_base+'issues.json', auth=(username,password), data=parameters_json, headers=headers,verify=False)
-#print r.status

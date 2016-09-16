@@ -7,7 +7,7 @@ import sesion
 from beaker.middleware import SessionMiddleware
 import funciones
 
-url_base="https:º//dit.gonzalonazareno.org/redmine/"
+url_base="https://dit.gonzalonazareno.org/redmine/"
 
 session_opts = {
     'session.type': 'memory',
@@ -80,7 +80,7 @@ def step3():
         password=sesion.get("pass")
         idproyecto=sesion.get("idproyecto")
         nombreproyecto=sesion.get("nombreproyecto")
-        
+        sesion.set("alumnos",alumnos)
         # Categorias
         r=requests.get(url_base+'/projects/'+idproyecto+'/issue_categories.json',auth=(username,password),verify=False)
         if r.status_code == 200:
@@ -96,7 +96,7 @@ def step3():
         		for user in doc["group"]["users"]:
         			alumnos.append(str(user["id"]))
         info={"tittle":"","desc":"","categoria":"-1","fecha2":"dd/mm/aaaa"}
-        return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,alumnos=alumnos,categorias=categorias,error={},info=info)
+        return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,categorias=categorias,error={},info=info)
         
 @route('/step4',method="post") 
 def step4():
@@ -127,7 +127,7 @@ def step4():
         		info["fecha2"]=""
         	
         if len(error)>0:
-        	return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,alumnos=alumnos,categorias=categorias,error=error,info=info)        
+        	return template("pass4.tpl",user=username,idproyecto=idproyecto,nombreproyecto=nombreproyecto,categorias=categorias,error=error,info=info)        
 
 @route('/step2',method="get")
 @route('/step3',method="get")

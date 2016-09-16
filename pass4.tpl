@@ -34,6 +34,9 @@
           <label for="date">Fecha fin:</label>
           <input type="text" name="fecha2" value="dd/mm/aaaa">
         </fieldset>
+         
+          
+
           <button type="submit">Crear tareas</button>
       </form>
       

@@ -135,4 +135,4 @@ def do_logout():
 def server_static(filepath):
     return static_file(filepath, root='static')
 
-run(app=app,host='localhost', port=8080,reloader=True)
+#run(app=app,host='localhost', port=8080,reloader=True)

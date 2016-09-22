@@ -93,6 +93,10 @@ def step3():
        
         if fecha2<>"":
         	lfecha=fecha2.split("/")
+	        if len(lfecha[1])==1:
+	        	lfecha[1]='0'+lfecha[1]
+	        if len(lfecha[0])==1:
+	        	lfecha[0]='0'+lfecha[0]
 	        fecha2=lfecha[2]+"-"+lfecha[1]+"-"+lfecha[0]
 
 
@@ -112,6 +116,7 @@ def step3():
         		doc=r.json()
         		nombre=doc["user"]["firstname"]+" "+doc["user"]["lastname"]
         	payload = {'issue': {'project_id': idproyecto,'subject': tittle,'description': desc,'category_id': int(categoria),'assigned_to_id': int(alum),'due_date':fecha2}}
+		print payload
         	parameters_json = json.dumps(payload)
         	headers = {'Content-Type': 'application/json'}
         	r = requests.post(url_base+'issues.json', auth=(username,password), data=parameters_json, headers=headers,verify=False)
@@ -135,4 +140,4 @@ def do_logout():
 def server_static(filepath):
     return static_file(filepath, root='static')
 
-#run(app=app,host='localhost', port=8080,reloader=True)
+run(app=app,host='localhost', port=8080,reloader=True)

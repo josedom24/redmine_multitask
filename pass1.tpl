@@ -1,26 +1,28 @@
 %include('header.tpl')
-      <form action="login" method="post">
-      
-        <h1>Redmine Multi Task</h1>
-        
-        <fieldset>
-          <legend><span class="number">1</span>Autentificación</legend>
-         
-          % if 'error' in locals():
+     
+    <div class="container">
+
+      <form class="form-signin" action="login" method="post">
+        <h2 class="form-signin-heading">Redmine Multitask</h2>
+        % if 'error' in locals():
 
                 <b>Usuario incorrecto</b>
           % end
-          <label for="name">Usuario:</label>
-          <input type="text" id="name" name="user_name">
-                            
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="user_password">
-          
-          
-        
-        
-        <button type="submit">Entrar</button>
+
+         <label for="inputEmail" class="sr-only">Usuario:</label>
+        <input type="text" id="inputEmail" class="form-control" name="useer_name" placeholder="Ususario" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" name="user_password" placeholder="Password" required>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" >Sign in</button>
       </form>
+
+    </div> <!-- /container -->
+
+
+
+      
+    
       
     </body>
 </html>

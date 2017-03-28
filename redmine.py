@@ -31,7 +31,6 @@ def login():
 	if r.status_code == 200:
 		doc=r.json()
 		if len(doc["projects"])==1:
-			
 			return template('pass1.tpl',error=True)			
 		else:
 			sesion.set("user",username) 

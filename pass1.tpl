@@ -10,7 +10,7 @@
           % end
 
          <label for="inputEmail" class="sr-only">Usuario:</label>
-        <input type="text" id="inputEmail" class="form-control" name="useer_name" placeholder="Ususario" required autofocus>
+        <input type="text" id="inputEmail" class="form-control" name="user_name" placeholder="Ususario" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" name="user_password" placeholder="Password" required>
 
